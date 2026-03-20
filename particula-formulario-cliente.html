@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partícula — Cuéntanos tu negocio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --verde: #1a3a2a;
+    --verde-medio: #2d5a3d;
+    --verde-claro: #e8f0ea;
+    --crema: #f5f0e8;
+    --crema-oscuro: #ede5d5;
+    --texto: #1a1a1a;
+    --texto-suave: #666;
+    --borde: #c8c0b0;
+    --acento: #8b4a1c;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--crema);
+    color: var(--texto);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .hero {
+    background: var(--verde);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+
+  .logo-mark {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    color: white;
+    letter-spacing: -1px;
+    display: block;
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 6px;
+  }
+
+  .hero-copy {
+    margin-top: 2rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-copy h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem;
+    color: white;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-copy p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .progreso {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 2rem;
+  }
+
+  .paso-bar {
+    height: 3px;
+    flex: 1;
+    background: var(--crema-oscuro);
+    border-radius: 999px;
+    transition: background 0.3s;
+  }
+
+  .paso-bar.activo { background: var(--verde); }
+  .paso-bar.completo { background: var(--verde-medio); }
+
+  .seccion {
+    display: none;
+  }
+
+  .seccion.visible { display: block; }
+
+  .card {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acento);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--verde);
+    margin-bottom: 0.4rem;
+    font-weight: 400;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .field-group {
+    margin-bottom: 1.25rem;
+  }
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--texto);
+    margin-bottom: 0.4rem;
+  }
+
+  label span {
+    color: var(--texto-suave);
+    font-weight: 300;
+    font-size: 0.8rem;
+    margin-left: 4px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--texto);
+    background: var(--crema);
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+    resize: vertical;
+    -webkit-appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--verde-medio);
+    background: white;
+  }
+
+  textarea { min-height: 90px; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .chips-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    padding: 7px 14px;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background: var(--crema);
+    color: var(--texto-suave);
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .chip:hover { border-color: var(--verde-medio); color: var(--verde); }
+  .chip.active { background: var(--verde); border-color: var(--verde); color: white; }
+
+  .nav-btns {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .btn-back {
+    padding: 0.9rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-back:hover { border-color: var(--verde); color: var(--verde); }
+
+  .btn-next {
+    flex: 1;
+    padding: 0.9rem;
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-next:hover { background: var(--verde-medio); }
+  .btn-next:disabled { background: var(--borde); cursor: not-allowed; }
+
+  .gracias {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .gracias.visible { display: block; }
+
+  .check-circle {
+    width: 64px;
+    height: 64px;
+    background: var(--verde-claro);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+
+  .check-circle svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--verde);
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .gracias h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: var(--verde);
+    margin-bottom: 0.75rem;
+  }
+
+  .gracias p {
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+    line-height: 1.7;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  .footer-marca {
+    text-align: center;
+    padding: 2rem 0 1rem;
+    font-size: 0.75rem;
+    color: var(--borde);
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 520px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .card { padding: 1.25rem; }
+    .hero { padding: 2.5rem 1.25rem 2rem; }
+    .logo-mark { font-size: 2.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="logo-mark">Partícula</span>
+  <span class="logo-sub">storytellers</span>
+  <div class="hero-copy">
+    <h1>Cuéntanos todo sobre tu negocio</h1>
+    <p>Con esta información creamos una identidad sonora hecha exactamente para ti. No hay respuestas incorrectas, entre más detalle mejor.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="progreso">
+    <div class="paso-bar activo" id="bar-1"></div>
+    <div class="paso-bar" id="bar-2"></div>
+    <div class="paso-bar" id="bar-3"></div>
+    <div class="paso-bar" id="bar-4"></div>
+  </div>
+
+  <!-- PASO 1 -->
+  <div class="seccion visible" id="paso-1">
+    <div class="card">
+      <span class="step-label">01 de 04</span>
+      <h2>Tu negocio</h2>
+      <p class="subtitle">Primero lo básico: quiénes son y qué hacen.</p>
+
+      <div class="field-group">
+        <label>Nombre del negocio <span>*</span></label>
+        <input type="text" id="nombre" placeholder="Ej. Café Almendra">
+      </div>
+
+      <div class="field-group">
+        <label>Tu nombre y puesto</label>
+        <input type="text" id="contacto" placeholder="Ej. Ana Martínez, dueña">
+      </div>
+
+      <div class="grid-2">
+        <div class="field-group">
+          <label>Correo de contacto</label>
+          <input type="email" id="email" placeholder="tu@correo.com">
+        </div>
+        <div class="field-group">
+          <label>WhatsApp</label>
+          <input type="tel" id="whatsapp" placeholder="+52 477 000 0000">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>¿Qué hace tu negocio? <span>¿Cuál es tu propuesta de valor?</span></label>
+        <textarea id="propuesta" placeholder="Cuéntanos qué venden, qué problema resuelven y qué los hace diferentes a otros lugares..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>¿Qué productos o servicios ofrecen?</label>
+        <input type="text" id="productos" placeholder="Ej. Café de especialidad, desayunos, postres artesanales">
+      </div>
+
+      <div class="field-group">
+        <label>Links de redes sociales <span>opcional</span></label>
+        <input type="url" id="redes" placeholder="https://instagram.com/tunegocio">
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-next" onclick="irPaso(2)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 2 -->
+  <div class="seccion" id="paso-2">
+    <div class="card">
+      <span class="step-label">02 de 04</span>
+      <h2>Tu cliente</h2>
+      <p class="subtitle">La música habla directamente a quien está en tu lugar. Cuéntanos todo sobre ellos.</p>
+
+      <div class="grid-2">
+        <div class="field-group">
+          <label>Rango de edad principal</label>
+          <select id="edad">
+            <option value="">Selecciona...</option>
+            <option>18–25 años</option>
+            <option>25–35 años</option>
+            <option>35–45 años</option>
+            <option>45–60 años</option>
+            <option>Mixto</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Género predominante</label>
+          <select id="genero">
+            <option value="">Selecciona...</option>
+            <option>Mayormente femenino</option>
+            <option>Mayormente masculino</option>
+            <option>Equilibrado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>¿A qué se dedican tus clientes? ¿Por qué vienen contigo?</label>
+        <textarea id="cliente_desc" placeholder="Ej. Profesionistas jóvenes que buscan trabajar fuera de casa, parejas en su día libre, familias los fines de semana..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>Si pudieras describir a tu cliente ideal con lujo de detalle, ¿cómo sería?</label>
+        <textarea id="cliente_ideal" placeholder="Imagina a una persona específica: cómo se viste, qué música escucha en su vida diaria, a dónde va, qué le importa..."></textarea>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-back" onclick="irPaso(1)">← Atrás</button>
+      <button class="btn-next" onclick="irPaso(3)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 3 -->
+  <div class="seccion" id="paso-3">
+    <div class="card">
+      <span class="step-label">03 de 04</span>
+      <h2>La experiencia</h2>
+      <p class="subtitle">La música refuerza todo lo que ya construiste. Cuéntanos cómo se siente tu lugar.</p>
+
+      <div class="grid-2">
+        <div class="field-group">
+          <label>Horario</label>
+          <select id="horario">
+            <option value="">Selecciona...</option>
+            <option>Solo mañanas (7am–1pm)</option>
+            <option>Mañana y tarde (7am–6pm)</option>
+            <option>Todo el día (8am–9pm)</option>
+            <option>Tarde-noche (2pm–11pm)</option>
+            <option>Solo fines de semana</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Tipo de espacio</label>
+          <select id="espacio">
+            <option value="">Selecciona...</option>
+            <option>Cafetería</option>
+            <option>Restaurante</option>
+            <option>Bar / cervecería</option>
+            <option>Tienda de retail</option>
+            <option>Hotel / lobby</option>
+            <option>Coworking</option>
+            <option>Otro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>¿Qué vibe o atmósfera quieren proyectar?</label>
+        <textarea id="vibe" placeholder="Ej. Cálido y acogedor, cosmopolita y moderno, relajado y artístico, enérgico y urbano..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>¿Qué marcas te inspiran o admiras?</label>
+        <input type="text" id="inspiracion" placeholder="Ej. Blue Bottle, Mercado Roma, Casa Oaxaca, Ace Hotel...">
+      </div>
+
+      <div class="field-group">
+        <label>¿Qué otros elementos tienen para la experiencia? <span>opcional</span></label>
+        <input type="text" id="elementos" placeholder="Ej. Arte en paredes, terraza, iluminación especial, música en vivo...">
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-back" onclick="irPaso(2)">← Atrás</button>
+      <button class="btn-next" onclick="irPaso(4)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 4 -->
+  <div class="seccion" id="paso-4">
+    <div class="card">
+      <span class="step-label">04 de 04</span>
+      <h2>La música hoy</h2>
+      <p class="subtitle">Para saber a dónde ir, necesitamos saber de dónde venimos.</p>
+
+      <div class="field-group">
+        <span class="chips-label">¿Qué música ponen actualmente?</span>
+        <div class="chips" id="musica_actual">
+          <div class="chip" onclick="toggleChip(this)">Radio comercial</div>
+          <div class="chip" onclick="toggleChip(this)">Spotify random</div>
+          <div class="chip" onclick="toggleChip(this)">Playlist genérica</div>
+          <div class="chip" onclick="toggleChip(this)">Sin música</div>
+          <div class="chip" onclick="toggleChip(this)">Ya tienen algo curado</div>
+          <div class="chip" onclick="toggleChip(this)">No sé</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <span class="chips-label">¿Cuál es el problema principal con su música?</span>
+        <div class="chips" id="problema_musica">
+          <div class="chip" onclick="toggleChip(this)">No va con la identidad</div>
+          <div class="chip" onclick="toggleChip(this)">Se repite mucho</div>
+          <div class="chip" onclick="toggleChip(this)">Los empleados la cambian</div>
+          <div class="chip" onclick="toggleChip(this)">Nadie la gestiona</div>
+          <div class="chip" onclick="toggleChip(this)">No tenemos nada</div>
+          <div class="chip" onclick="toggleChip(this)">Volumen inconsistente</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>¿Algo más que quieras contarnos? <span>opcional</span></label>
+        <textarea id="extra" placeholder="Historia del negocio, un momento especial, algo que quieran evitar, cualquier detalle que sientas importante..."></textarea>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-back" onclick="irPaso(3)">← Atrás</button>
+      <button class="btn-next" onclick="enviarFormulario()" id="btn-enviar">Enviar a Partícula →</button>
+    </div>
+  </div>
+
+  <!-- GRACIAS -->
+  <div class="gracias" id="gracias">
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h2>¡Listo, lo tenemos todo!</h2>
+    <p>Emmanuel ya recibió tu información y pronto estará en contacto contigo para presentarte el diagnóstico musical de tu negocio.</p>
+  </div>
+
+  <div class="footer-marca">Partícula storytellers · León, Gto.</div>
+</div>
+
+<script>
+  let pasoActual = 1;
+
+  function toggleChip(el) {
+    el.classList.toggle('active');
+  }
+
+  function getChips(id) {
+    return Array.from(document.querySelectorAll(`#${id} .chip.active`))
+      .map(c => c.textContent).join(', ') || 'No especificado';
+  }
+
+  function val(id) {
+    return document.getElementById(id)?.value?.trim() || '';
+  }
+
+  function irPaso(n) {
+    if (n === 2 && !val('nombre')) {
+      document.getElementById('nombre').focus();
+      document.getElementById('nombre').style.borderColor = '#c0392b';
+      setTimeout(() => document.getElementById('nombre').style.borderColor = '', 2000);
+      return;
+    }
+
+    document.getElementById(`paso-${pasoActual}`).classList.remove('visible');
+    document.getElementById(`bar-${pasoActual}`).classList.remove('activo');
+    document.getElementById(`bar-${pasoActual}`).classList.add('completo');
+
+    pasoActual = n;
+    document.getElementById(`paso-${pasoActual}`).classList.add('visible');
+    document.getElementById(`bar-${pasoActual}`).classList.add('activo');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function enviarFormulario() {
+    const btn = document.getElementById('btn-enviar');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    const datos = {
+      nombre: val('nombre'),
+      contacto: val('contacto'),
+      email: val('email'),
+      whatsapp: val('whatsapp'),
+      propuesta: val('propuesta'),
+      productos: val('productos'),
+      redes: val('redes'),
+      edad: val('edad'),
+      genero: val('genero'),
+      cliente_desc: val('cliente_desc'),
+      cliente_ideal: val('cliente_ideal'),
+      horario: val('horario'),
+      espacio: val('espacio'),
+      vibe: val('vibe'),
+      inspiracion: val('inspiracion'),
+      elementos: val('elementos'),
+      extra: val('extra'),
+      musica_actual: getChips('musica_actual'),
+      problema_musica: getChips('problema_musica'),
+    };
+
+    const resumen = `
+NUEVO BRIEF — PARTÍCULA STORYTELLERS
+
+NEGOCIO: ${datos.nombre}
+CONTACTO: ${datos.contacto}
+EMAIL: ${datos.email}
+WHATSAPP: ${datos.whatsapp}
+REDES: ${datos.redes}
+
+--- EL NEGOCIO ---
+Propuesta: ${datos.propuesta}
+Productos: ${datos.productos}
+
+--- EL CLIENTE ---
+Edad: ${datos.edad} | Género: ${datos.genero}
+Descripción: ${datos.cliente_desc}
+Cliente ideal: ${datos.cliente_ideal}
+
+--- LA EXPERIENCIA ---
+Horario: ${datos.horario} | Espacio: ${datos.espacio}
+Vibe: ${datos.vibe}
+Inspiración: ${datos.inspiracion}
+Elementos: ${datos.elementos}
+
+--- MÚSICA HOY ---
+Música actual: ${datos.musica_actual}
+Problema: ${datos.problema_musica}
+Extra: ${datos.extra}
+    `.trim();
+
+    try {
+      const response = await fetch('https://formspree.io/f/mjgazpjn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: datos.email || 'sin-correo@particula.mx',
+          negocio: datos.nombre,
+          mensaje: resumen,
+          _subject: `Nuevo brief Partícula — ${datos.nombre}`,
+          _replyto: datos.email,
+        })
+      });
+
+      if (response.ok) {
+        document.getElementById(`paso-${pasoActual}`).classList.remove('visible');
+        document.querySelectorAll('.paso-bar').forEach(b => { b.classList.remove('activo'); b.classList.add('completo'); });
+        document.getElementById('gracias').classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error('Error en envío');
+      }
+    } catch (e) {
+      alert('Hubo un problema al enviar. Por favor intenta de nuevo.');
+      btn.disabled = false;
+      btn.textContent = 'Enviar a Partícula →';
+    }
+  }
+</script>
+</body>
+</html>
